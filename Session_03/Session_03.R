@@ -9,7 +9,7 @@ rm(list=ls())
 x <- seq(1,10)
 my.numbers <- c(23,45,67,23,56)
 
-# identifies the vector type (double, integer, logical, or character)
+# typeof() function identifies the vector type (double, integer, logical, or character)
 typeof(x)
 # [1] "integer"
 
@@ -21,9 +21,9 @@ typeof(my.numbers)
 # using the x <- 1:10 method or seq() function, the numeric values will be coded as integer. 
 # Check our x object as example.
 # If you want to change a double to an integer or vice versa, you can specify one of the following:
-# as.double function converts integers to double-precision values
-# as.numeric is identical to as.double()
-# as.integer converts doubles to integers
+# as.double() function converts integers to double-precision values
+# as.numeric() is identical to as.double()
+# as.integer() converts doubles to integers
 
 # Let's create a vector with integers and check its type
 int.var <- c(1L, 6L, 10L)
@@ -104,7 +104,7 @@ typeof(log.vec)
 comparison <- 2:20
 
 # then we create a logical vector of the same length as 'comparison' with 
-# values FALSE corresponding to elements of x where the condition is not met and TRUE where it is met
+# values FALSE corresponding to elements of 'comparison' where the condition is not met and TRUE where it is met
 temp <- comparison > 13
 temp
 # Output: [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
