@@ -1,1 +1,123 @@
+##############################
+##  Homework assignment #1  ##
+##############################
+
+# Your full name: 
+# Date:
+
+###########################################################
+##   Please comment your answers, explaining your code.  ##
+##   Code lines only do not provide points.              ##
+###########################################################
+
+####### TASK 1: 0.5 points ################################
+
+# Use R to compute the sum of the first 50 positive integers.  
+# Hint: explore the sum() function
+
+
+# Your output:
+
+####### TASK 2: 1 point ################################
+
+# 1. Create an empty vector with vector() function. 
+
+
+# What is the default data type for vector?
+# Your answer:
+
+# 2. Change the data type of this empty vector to integer.
+
+
+# 3. Insert different types of data (10 integers, 4 character strings, 3 logical values, e.g. TRUE, FALSE, NA)
+# in the created empty vector
+# Hint: think of c() function
+
+
+# We tried to combine different types of data in one vector. Does R tell us it's a mistake? 
+# Your answer:
+
+# What is the class of our vector now? 
+# Your answer:
+
+# This R behaviour is called "coercion". Please describe it in your own words.
+# Your answer: 
+
+
+####### TASK 3: 1 point ################################
+
+# Working with logical vectors: 
+# 1. Create a vector with 10 random integers from 20 to 40, assign the name 'age' to it
+
+
+# Image you want to explore the age of the participants in your vector.
+# Create a logical operator for checking what entries are more or equal to 25 but less or equal to 35
+
+
+# Store the results of the logical operator, assigning the name "age.range" to it
+
+
+# Use the function sum() on 'age.range' to return the number of entries that are true
+
+
+# How many participants are between age 25 and 35?
+
+# Use the function which() to look at the entries where a logical vector is true,
+# and store the TRUE entries into a separate object
+
+
+####### TASK 4: 1 point ################################
+
+# Operations on the vectors
+# 1. Create a character vector with 6 entries
+
+
+# 2. Get the last element of the vector (explore length() function)
+
+
+
+# 3. Create a numeric vector with values 2, 0, -3, 0, 5, 6 and sort the values from the LARGEST to the smallest.
+# Hint: look at the sort() function
+
+
+# Your output:
+
+# 4. Combine your character vector with your numeric vector.
+
+
+
+# 5. In R every element in the vector has a particular position or index, starting with [1]
+# Check the indices for all items in your new vector with [] brackets
+
+
+
+# 5. Delete the first six character items in your new vector, using their indices
+
+
+
+# 6. Convert your vector to an integer vector
+
+
+
+####### TASK 5: 1.5 points ################################
+
+# Working with lists
+# 1. Create a list containing two vectors: one vector is a variable with three names: "A1", "A2", "A3" 
+# the other one is a vector with 10 randomly generated integers between 1 and 10 (hint: use sample() function)
+# Print the results
+
+
+
+# 2. Create one more list with two vectors: one is a range of numbers from 1 to 5,
+# the second one is a LOGICAL vector with three variables, print the results
+
+
+
+# 3. Combine two lists to create a larger list (hint: consider append() function)
+# Print the results
+
+
+
+
+################# END OF THE HOME ASSIGNMENT ###################
 
