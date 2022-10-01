@@ -1,0 +1,35 @@
+##############################
+##  Homework assignment #2  ##
+##############################
+
+# Your full name: 
+# Date:
+
+###########################################################
+##   Please comment your answers, explaining your code.  ##
+###########################################################
+
+####### TASK 1: 0.5 points ################################
+
+# 1.Create a sequence of 14 consecutive integers from 1 to 70, with steps of 5 (i.e., 1, 6, 11, …)
+# and create a matrix with 7 rows and 2 columns using this sequence. Fill the matrix by row.
+# 2. Calculate the mean for all rows and the mean for all columns
+# 3. Create a new matrix where together with numbers from the previous matrix, 'means' are displayed
+# (under each column and after each row) 
+
+
+
+
+
+
+####### TASK 2: 0.5 points ################################
+# 1. Create a matrix A with numbers 12, -14, 4.5, 7.5 in two columns and 
+# a matrix B with numbers -5, 14, 3.5, -8 in two columns.
+# 2. Find the sum of A and B matrices and store the results with comments on how the operation is conducted
+# 3. Find the subtraction of A and B matrices and store the results with comments on how the operation is conducted
+# 4. Find the division of A to B matrices and store the results with comments on how the operation is conducted
+
+
+
+
+################# END OF THE HOME ASSIGNMENT ################
