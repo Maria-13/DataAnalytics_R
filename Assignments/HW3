@@ -1,0 +1,72 @@
+##############################
+##  Homework assignment #3  ##
+##############################
+
+# Your full name: 
+# Date:
+
+###########################################################
+##   Please comment your answers, explaining your code   ##
+##   and providing data interpretation.                  ##
+###########################################################
+
+
+####### TASK 1: 0.5 points ################################
+
+# Store 'women' dataset from R into your environment and save it as a data frame
+library(datasets)
+library(help = "datasets")
+
+# Find information about this data set online or in R and briefly describe it
+# Your answer:
+
+
+
+####### TASK 2: 1 point ################################
+# 1. Provide brief examination of the saved data set ('women'). Report your results.
+
+# 2. Convert height(inches) into height(cm) and weight(lbs) into weight(kg)
+# and create a new data frame with 2 columns 'height.cm' and 'weight.kg'
+# P.S. there are several ways to do it, here just use the mathematical way to calculate
+# and convert inches into cm (1 inch = 2.54cm) and lbs into kg (1 lb = 0.45kg)
+
+
+# 3. Create two histograms for height.cm and weight.cm, using hist() function
+
+# 4. Create two boxplots for height.cm and weight.cm, using boxplot() function
+
+# 5. Report standard deviation and variance for weight and height. 
+# Interpret the results from the all the graphs and provide Exploratory Data Analysis.
+
+
+
+####### TASK 3: 0.5 points ################################
+
+# Briefly, in your own words, describe the difference between a 'table' object and a 'data frame' in R.
+# When is table() function used?
+# P.S. do not confuse 'table' with 'data.table'
+
+# Your answer:
+
+
+####### TASK 4: 1 point ################################
+
+# The following data is available: 
+# Thirty students took a test with the highest score 10 points. 
+# Their results were as follows:
+# 8, 9, 7, 3, 7, 7, 5, 5, 6, 7, 10, 7, 4, 7, 1, 5, 6, 4, 7, 8, 2, 8, 4, 6, 10, 7, 4, 2, 4, 9
+
+# 1. Prepare a frequency table of the scores.
+
+# 2. Calculate the mean, median and mode of the scores.
+
+# 3. Interpret these results, using boxplot() function.
+
+# 4. Calculate the relative frequency of the scores 
+
+# 5. Calculate cumulative frequency of the scores
+
+# 6. Finally, calculate the relative cumulative frequency of the scores
+
+# 7. Create a data frame with columns for 'score' / 'freq' / 'rel' / 'cumul' / rel_cumul
+# to store all the frequency results
