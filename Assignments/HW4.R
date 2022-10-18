@@ -12,6 +12,7 @@
 
 # 1. Go to https://andmed.stat.ee/en/stat and create a data set you want to explore. Import the data into R.
 # 2. Prepare EDA (Explanatory Data Analysis). Write at least 5 questions and provide your answers during the first stage of EDA.
+# (You can check the slides from Session 5 - Data Exploration (EDA) for ideas or come up with your own questions).
 # 3. Provide brief descriptive statistical analysis of your data set (like measures of central tendency and dispersion).
 # 4. Include at least one plot into your report. 
 # If ggplot2 is too complicated for you now, create a plot with R base functions.
