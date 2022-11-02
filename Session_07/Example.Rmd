@@ -1,0 +1,59 @@
+---
+title: "Paper summary"
+author: "Maria Kunevich"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Paper summary
+
+## Objectives of the task
+
+* learn to analyse and provide an in-depth report on someone’s work
+* learn how to find scientific papers related to your interests
+* improve your skills in analysing complex text and summarising it in a short summary
+* practice your writing skills
+* introduce your instructor to lots of interesting research through reading your summaries
+
+## What you shoud do
+
+1. Look for the articles that use ```R``` as a tool for analysis in your field and choose one paper for the summary.
+Some resources include:
+* Google Scholar <https://scholar.google.com>
+* access through the University database: <https://login.ezproxy.tlu.ee/login>
+
+Use some key words like ```R```, ```statistical data analysis```, ```your field of interest```.
+
+For example: **r statistical data analysis  education**
+
+Use these points as guidelines for choosing the paper: 
+
+* the paper is published in a respectful source
+* the paper uses ```R``` for analysis
+* it is not a guide or a tutorial or a description of package
+
+2. Write a concise summary essay based on this paper. There are good guidelines on how to approach such task [here](http://courses.washington.edu/ordinary/summary.pdf) and [here](https://writingcenter.uconn.edu/wp-content/uploads/sites/593/2014/06/How_to_Summarize_a_Research_Article1.pdf).
+
+Write up to two pages, summarise the main ideas, findings, analyse what approaches to data analysis were taken, what are the advantages and limitations of such approaches.
+
+3. Make the summary exactly **2 pages** including references.
+
+4. Make it absolutely clear in your text that it is an overview of **the published article**, citing all relevant papers. Add enough relevant citations from the article (probably 3-5) to the most important other articles that are cited there. Follow the **APA** citation style.
+
+5. Make sure your summary follows the structure and has a **title**, **author** (you), **author affiliation** (Tallinn University, Faculty of …), **abstract**, **introduction**, **body** (with subsections), **conclusions** and **references**.
+
+Use the **2-column layout** as it is much easier to read. You can find a Word template [here](https://docs.google.com/document/d/e/2PACX-1vTkf2KselDOxYV1dQ5RlfNA90K_4fLZ4CbDkENSCiStROCJnl-eTpvKuTa7WQyqFA/pub) or use **LaTeX** styles if you are familiar with it. You can use [Overleaf](https://www.overleaf.com/) for creating a file online, without installing any additional software. One of the templates is [here](https://www.overleaf.com/latex/templates/icml2021-template/dsftnbmjgyhv) and one more example is [here](https://www.overleaf.com/latex/templates/data-driven-gamification-design-workshop-2017-the-two-column-style-for-ceur-ws/hpzqfrtytjwh).
+
+6. Add some illustrations if possible.
+
+7. Send me your summary as **a PDF only** (no other formats, please)
+
+## Deadlines
+
+By **Nov 2** inform me about the paper you've chosen. 
+The deadline for summary submission is **Nov 20** (23:59) directly to [my email](mailto:msk41@tlu.ee).
