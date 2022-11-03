@@ -1,0 +1,281 @@
+---
+title: "Session 8"
+output: html_notebook
+---
+
+```{r setup} 
+# include=FALSE}
+# knitr::opts_chunk$set(echo = TRUE)
+# include = FALSE prevents code and results from being displayed # in the file. R Markdown runs the code in the chunk, and the results can be used by other chunks
+# echo = FALSE prevents code, but not the results from appearing in the finished file. This is a useful way to embed figures.
+```
+
+### %\>% Operator
+
+`tidyverse` packages often make use of the pipe operator `%>%` (though it's not required). The main advantage of `the pipeline` is the ability to string multiple functions together by incorporating `%>%`.
+
+In other words, this operator forwards a value/result into the next function call/expression.
+
+For example, a function in `R` such as
+
+`f(x)` can be rewritten as `x %>% f`
+
+This means that functions that take one argument, function(argument), can be rewritten as follows: `argument %>% function()`.
+
+For instance, a function to filter data can be written as:
+
+`filter(data, variable == numeric_value)` or `data %>% filter(variable == numeric_value)`
+
+The benefit of using `%>%` is not evident here as both functions complete the same task. However, when you perform multiple functions its advantage becomes obvious. We'll see more examples when we start using `tidyr` and `dplyr` packages more.
+
+### `tidyr` and `dplyr` packages
+
+First let's install and call up the `tidyr` package and the `dplyr` package.
+
+```{r, echo=FALSE, message=FALSE}
+# echo=FALSE hiding source code
+# message=FALSE hiding the loading messages
+# install.packages("tidyr")
+library(tidyr)
+#install.packages("dplyr")
+library(dplyr)
+```
+
+### Using `tidyr`
+
+Let's create a data frame for three participants as column 1, and columns `a` and `b` (test version) with some score numbers:
+
+```{r, echo=FALSE}
+messy1 <- data.frame(participant = c("P01", "P02", "P03"), a = c(10, 8, 6), b = c(50, 42, 36))
+print(messy1)
+```
+
+#### Pivoting to longer
+
+`pivot_longer()` takes four principal arguments:
+
+- the data
+- the `names_to` column variable we wish to create from column names
+- the `values_to` column variable we wish to create and fill with values
+- `cols` are the name of the columns we use to make this pivot (or to drop).
+
+We have three variables (participant, test version and result/score), but only participant is currently a proper column. We use `pivot_longer()` to put the `a` and `b` columns into our value pairs of `version` and `score`:
+
+```{r tidyr, echo=FALSE}
+tidy1 <- 
+```
+
+Here we have only two columns which we listed individually. Usually the columns to pivot are specified with `dplyr::select()` style notation. `test` and `score` do not exist in our table so we put their names in quotes. In the final tibble the pivoted columns are dropped, and we get new `test`and `score` columns. Otherwise, the relationships between the original variables are preserved.
+
+#### Pivoting to wider
+
+`pivot_wider()` takes three principal arguments:
+
+- the data
+- the `names_from` column variable whose values will become new column names
+- the `values_from` column variable whose values will fill the new column variables
+
+Let's look at the example from `tidyverse` dataset `us_rent_income`:
+
+```{r data, include=FALSE}
+# find information about the dataset and view it
+
+```
+```{r view, echo=FALSE}
+# view the first 6 rows of the dataset
+```
+
+What information can you get from looking at the dataset?
+
+Imagine we want to see the `estimates` for `income` and `rent` as separate columns and `moe` for `income` and `rent` as separate columns. This will be the `wide format`.
+
+```{r wide, echo=FALSE}
+tidy.wide <- 
+```
+#### Separating and Uniting
+
+#### `separate()` function
+
+Imagine we have some measurements of how much time people spend on performing a task on an app (researching UX design), measured at two locations (work and home), in the morning and in the evening. Each participant has been randomly assigned to either test or control group. Let's create a mock dataframe for 4 participants.
+
+```{r, echo=FALSE}
+messy2 <- data.frame(id = 1:4,
+  group = sample(rep(c('control', 'test'), each = 2)),
+  work.morning = runif(4),
+  home.morning = runif(4),
+  work.evening = runif(4),
+  home.evening = runif(4))
+print(messy2)
+```
+
+To tidy this dataset, we first use `pivot_longer()` to turn columns `work.morning`, `home.morning`, `work.evening` and `home.evening` into a key value pair `place`-`time`:
+
+```{r, echo=FALSE}
+messy2 <-  
+  
+messy2 %>% head(8)
+```
+We see that two variables are joined together in one column. `separate()` allows us to tease them apart.
+So we use `separate()` to split the `place` into `location` and `daytime`, using a regular expression to describe the character that separates them.
+```{r}
+tidy2 <- 
+  
+tidy2 %>% head(8)
+```
+#### `unite( )` function
+
+If we want to merge two variables into one and combine the values of two variables, the `unite()` function can paste together multiple variable values into one. In essence, it combines two variables of a single observation into one variable. 
+
+Let's combine `location` and `daytime` back to one variable. Using the `tidy2` dataframe we created above, we can re-unite the `location` and `daytime` variables we created and re-create the original `place` variable we had in the `messy2` dataframe.
+
+```{r, echo=FALSE}
+united <- 
+  
+united %>% head(8)
+```
+
+
+### Using `dplyr`
+
+Let's download the `gapminder` dataset and explore it with the `head()` function:
+
+```{r, include=FALSE}
+# any R code in this chunk will be hidden, 
+# without showing any output at all
+install.packages("gapminder")
+library(gapminder)
+```
+
+```{r, echo=FALSE}
+# examine the dataset and display the first 6 rows
+```
+
+What variables are included? List them below:
+
+-   `variable 1`
+
+How many observations (rows) are in the dataset?
+
+You can also type `View(gapminder)` in the console to see the full dataset in a new window.
+
+Include some `R` code below to explore the dataset.
+
+-   What is the type of each variable?
+
+-   Are there any categorical variables? How many levels do they have?
+
+-   What is the range of years?
+
+-   Is there data for every year over this period?
+
+-   Compute some basic descriptive statistics for the dataset. What is the average life expectancy across time and across all countries?
+
+#### `dplyr` functions
+
+```{r dplyr}
+
+?select
+?filter
+?arrange
+?mutate
+?group_by
+?summarise
+```
+
+#### `filter()` rows
+
+See if you can use the logical operators to manipulate the code below to show:
+
+- The data for Canada
+
+```{r filter, echo=FALSE}
+# example
+# filter(gapminder, country == "New Zealand")
+# your answer
+
+```
+
+- All data for countries in Oceania
+
+```{r, echo=FALSE}
+# example
+# filter(gapminder, country == "New Zealand")
+# answer
+
+```
+
+- Rows where the life expectancy is greater than 82
+```{r, echo=FALSE}
+# answer
+
+```
+You can also use Boolean operators to return only the rows that contain:
+
+- United States before 1980
+```{r, echo=FALSE}
+usa1980 <-  
+  
+head(usa1980)
+```
+
+- Countries where life expectancy in 2007 is below 50 or over 75
+```{r, echo=FALSE}
+lifExp50_75 <- 
+  
+head(lifExp50_75)
+```
+#### Sorting with `arrange()`
+
+Find the records with the smallest population.
+```{r, echo=FALSE}
+smallest <- 
+  
+head(smallest)
+```
+
+#### `mutate`
+
+You can create new variables with `mutate()`. 
+
+- Create a new variable with total GDP
+
+```{r, error = TRUE, echo=FALSE}
+totalGDP <- 
+  
+head(totalGDP)
+```
+
+#### `group_by`
+
+Create a summary table with the `population` and `GDP` by `continent` for the year `1952`:  
+
+```{r, echo=FALSE}
+
+summary <- 
+  
+  # filter to get the records we need
+   
+  # note that we need to add the new variable calculated above!
+                
+  # this defines the grouping category
+                
+            
+head(summary)
+```
+
+
+#### `summarise`
+
+Use `summarise()` to compute three statistics about the data:
+
+* The first (minimum) year in the dataset
+* The last (maximum) year in the dataset
+* The number of unique countries
+
+```{r, echo=FALSE}
+stats <- 
+  
+head(stats)
+```
+
+
