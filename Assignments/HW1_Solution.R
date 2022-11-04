@@ -103,12 +103,16 @@ my.new.vec[1]  # for checking the first index, the fifth, etc
 my.new.vec[5]
 my.new.vec[12]
 
+# you can also use which() function to check the 
+# index of a particular value
+which(my.new.vec == "name3")
+
 # 6. Delete the first six character items in your new vector, using their indices
 indices <- c(1:6)
 my.new.vec.1 <- my.new.vec[-indices]
 my.new.vec.1 
 
-# 7. Convert your vector to an integer vector
+# 7. Convert your new vector to an integer vector
 my.new.vec.1 <- as.integer(my.new.vec.1)
 my.new.vec.1
 
