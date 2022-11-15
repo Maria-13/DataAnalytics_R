@@ -1,0 +1,101 @@
+---
+title: "Session_09"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Correlation analysis in `R`
+
+First, let's create random numbers for a data set and explore the relationship between two randomly created variables.
+A random seed (in `R` `set.seed` function) is a number that initialises a pseudorandom number generator. Within the `set.seed` function, we simply have to specify a numeric value to set a seed.
+
+Have a look at the following R code:
+
+```{r}
+set.seed(35843)             # set random seed
+x <- rnorm(100)             # create x variable
+head(x)
+```
+
+Next, we have to create a second variable:
+
+```{r}
+y <- rnorm(100) + x        # create and print the head of y variable
+head(y)
+```
+
+Let's create a data frame with these two variables and then use these data to calculate Pearson's correlation:
+
+```{r}
+numbers <- data.frame(x,y)
+head(numbers)
+corr.1 <- round(cor(x, y), 2)   # Pearson correlation + round
+corr.1                         # the output to two decimal places
+```
+  
+The output is *0.76*, this is our Pearson correlation coefficient. Since the number is positive, it's a **positive** correlation, i.e. our two variables move in the same direction and when one variable increases, the other one increases as well. The number *0.76* indicates that it is a **strong** correlation.   
+
+Let's visualise our variables. Scatterplots are a great way to check quickly for correlation between pairs of *continuous data*.   
+
+```{r}
+# Basic scatter plot
+library(ggplot2)
+ggplot(numbers, aes(x=x, y=y)) + geom_point() +
+  geom_smooth(method=lm)    # adding a line
+```
+
+
+We can use the `cor` function to calculate a correlation matrix for an entire data frame with several variables:
+
+```{r}
+set.seed(12345)        # set seed and create example data
+data <- data.frame(x1 = rnorm(100),
+                   x2 = rnorm(100),
+                   x3 = rnorm(100),
+                   x4 = rnorm(100))
+head(data)        # print head of example data
+```
+
+In this example, we will see how to get Pearson correlation coefficient between a particular data frame variable with all the other variables in this data frame.
+
+To achieve this, we can apply the `cor` and `colnames` functions as shown below:
+
+```{r}
+data_cor <- cor(data[ , colnames(data) != "x1"], data$x1) # calculate correlation
+data_cor <- round(data_cor,2)  # round the output to 2 decimal places
+data_cor
+```
+
+Next, we can use the `cor` function to create a correlation matrix for for all our variables:
+
+```{r}
+data.corr.1 <- round(cor(data),2) # Pearson correlation + round the output
+data.corr.1
+```
+
+
+## Correlations of `height` and `weight`
+
+Let's look at one more data set.  
+Download the `women` data set and explore the correlation between `weight` and `height` by creating a scatterplot:
+
+```{r}
+data(women)
+# Basic scatter plot
+ggplot(women, aes(x=height, y=weight)) + geom_point()
+
+ggplot(women, aes(x=height, y=weight)) + 
+  geom_point(size=2, shape=21) +   # changing the dots size and shape
+  geom_smooth(method=lm) +         # adding the line 
+  labs(title = "Height x Weight")  # adding the title
+```   
+Let's calculate Pearson correlation coefficient:
+
+```{r}
+corr.2 <- cor(women$height, women$weight, method = 'pearson')
+corr.2 <- round(corr.2, 2) # rounding the number to two decimals
+corr.2
+```    
+  
+How can you interpret this result? Any ideas why the result is like that?
