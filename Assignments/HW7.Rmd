@@ -1,5 +1,5 @@
 ---
-title: "HW_07"
+title: "Homework Assignment 7"
 author: "Maria Kunevich"
 date: "2022-11-10"
 output:
@@ -8,16 +8,16 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Homework Assignment 7
+## Assignment Description
 
-Download the `gapminder` dataset into `R Markdown` session.  
+Download the `gapminder` data set into `R Markdown` session.  
 
-1. Perform quick EDA and pick up two variables you want to explore in more depth (for example, life expectancy and gdp).
+1. Perform quick EDA and pick up two variables you want to explore in more depth (for example, life expectancy and gdp) and a subset of data set (for instance, only certain continents, or countries, etc).
 
-```{r gapminder, include=FALSE}
+```{r gapminder, include=TRUE}
 #install.packages("gapminder")
 library(gapminder)
 head(gapminder)
@@ -25,18 +25,29 @@ View(gapminder)
 ```
 2. Prepare the data set that includes only variables of your interest in a suitable format for analysis (use `dlyr` package and `tidyr` when necessary).
 
-3. Explore two variables and how they are associated with each other (correlation analysis). Include the description of assumptions for correlation analysis, concluding with the type of analysis you choose. Create necessary visualisations to support your analysis (a histogram, a scatter plot, etc) and include your interpretation of the graphs.
+3. Explore two variables and how they are associated with each other (correlation analysis).   
+  
+3.1 Visualize your data using a scatter plot and include the description of assumptions for correlation analysis:  
+- Is the co-variation linear?  
+- Are the data from each of the 2 variables (x, y) follow a normal distribution (visual inspection of the data normality using histograms)?  
+  
+3.2 Calculate correlation coefficient and provide your interpretation.  
+  
+4. Hypothesis testing.   
+4.1 State the null hypothesis and the alternative hypothesis.   
+4.2 Report on collected data and sample size.  
+4.3 Perform Pearson correlation test between two variables.  
+4.4 Decide whether to reject or fail to reject your null hypothesis, report selected significance level.  
+4.5 Interpret and report the results.  
 
-4. Create a report in `R Markdown` with the following sections:  
+5. Create a report in `R Markdown` with the following sections:  
 
 - Introduction (brief description of the data set and variables)  
 
-- Questions for EDA  
+- Description of data transformation  
 
-- Description of data cleaning and transformation  
+- Correlation analysis (steps for visualisation, checking assumption for correlation analysis, interpretation of correlation coefficient)
 
-- Description of correlation analysis (steps for visualisation, checking assumption for correlation analysis, performing correlation analysis)  
+- Hypothesis testing: using the Pearson r statistic to conduct hypothesis tests about population correlation values
 
-- Data interpretation and conclusions  
-
-Each section in worth of 1 point, the whole analysis - 5 points.
+- Reporting the results  
