@@ -10,7 +10,8 @@ gender
 
 # create a sample of 100 numbers which are normally distributed
 # rnorm(n, mean, sd)
-expenses <- as.integer(rnorm(100, 950, sd=270))
+expenses <- as.integer(rnorm(100, 750, sd=150))
+expenses
 # create a tibble
 data <- tibble(age, gender,expenses)
 data$expenses
@@ -30,7 +31,7 @@ t.test(data$expenses, mu=850)
 # In order to perform a one-tailed test, you need to specify the alternative hypothesis
 # greater or less
 
-t.test(data$expenses, mu=850, alternative="greater")
+t.test(data$expenses, mu=850, alternative="less")
 
 # two-sample t-test
 male <- filter(data, gender == "Male")
