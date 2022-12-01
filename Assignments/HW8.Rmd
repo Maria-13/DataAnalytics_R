@@ -1,0 +1,49 @@
+---
+title: "Homework Assignment #8"
+author: "Maria Kunevich"
+date: "2022-12-01"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Assignment Description  
+
+Download the dataset from the website on Estonian statistics into `R Markdown` session. The number of admitted students across different specialties is recorded for Year 2021. The numbers of admitted students are presented for *Study programme group*, *Level of study*, and *Mother tongue*.     
+
+To download the dataset, use the following R code:  
+```{r, include=FALSE}
+library(readr)
+library(dplyr)
+
+# download the dataset from the Github repository using this code
+
+myfile <- "https://raw.githubusercontent.com/Maria-13/DataAnalytics_R/main/Assignments/higher_edu_in_Estonia-1.csv"
+higher.edu <- read.csv(url(myfile))
+View(higher.edu)
+higher.edu <- as_tibble(higher.edu)
+# delete the second column 'Indicator'
+higher.edu <- select(higher.edu, -Year, -Indicator)
+```
+1. Perform quick EDA and pick up variables you want to explore in more depth.  
+
+2. Prepare the data set that includes only variables of your interest in a suitable format for analysis (use `dlyr` package and `tidyr` when necessary).  
+
+3. Based on the dataset, formulate your *Research Question(s)*. Think of questions that you can answer with the help of either *chi-square* statistical test or some type of *t-test*. 
+
+4. Hypothesis testing.   
+4.1 State the null hypothesis and the alternative hypothesis.   
+4.2 Report on collected data and sample size.  
+4.3 Check the assumption of the chosen statistical test. Perform the required statistical test.  
+4.4 Decide whether to reject or fail to reject your null hypothesis, report selected significance level.  
+4.5 Interpret and report the results.  
+
+5. Create a report in `R Markdown` with clear sections, using headings and subheadings.  
+
+
+
+
+
