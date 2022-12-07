@@ -1,0 +1,160 @@
+---
+title: 'Homework Assignment 7: Possible Answer'
+author: "Maria Kunevich"
+date: "2022-11-15"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+```
+
+## Introduction
+
+In this report I am going to explore the dataset `gapminder` from the `R` package `gapminder`.
+Additional documentation can be found here:  
+<https://www.rdocumentation.org/packages/gapminder/versions/0.3.0>  
+
+The `gapminder` data frame includes six variables:   
+- `country`  
+- `continent`  
+- `year`  
+- `lifeExp` (meaning Life Expectancy at birth)  
+- `pop` (meaning Population)  
+- `gdpPercap` (meaning per-capita GDP given in international dollars)  
+
+First, I am downloading the package from CRAN (activating the library) to explore the dataset.   
+
+```{r, echo=FALSE}
+#install.packages("gapminder")
+library(gapminder)
+head(gapminder)
+View(gapminder)
+```
+There are 6 columns with the above mentioned variables and 1,704 entries.  
+For the `continent` variable there are 5 levels:  
+``` {r, echo=FALSE}
+levels(gapminder$continent)
+```
+For the `country` variable there are 142 levels, which means we have 142 different countries in the dataset:   
+``` {r, include=FALSE}
+levels(gapminder$country)
+```
+For the `year` variable we have 1704 entries which repeat years 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, 2002, 2007 for each country:  
+``` {r, echo=FALSE}
+length(gapminder$year)
+```
+
+## Questions for EDA  
+
+Using `dplyr` package, I am building a summary to view the average `lifeExp` for each continent.   
+```{r, echo=FALSE}
+library(dplyr)
+sum.1 <- aggregate(lifeExp ~ continent, gapminder, median) 
+sum.1
+```
+
+In the same line, I am building a summary to view the average `gdpPercap` for each continent.   
+```{r, echo=FALSE}
+sum.2 <- aggregate(gdpPercap ~ continent, gapminder, median)
+sum.2
+```
+
+It looks like there is some relationship between life expectancy and the amount of GDP for each continent (the continents have the same order for both variables) going from lowest to the highest:  
+Africa, Asia, Americas, Europe, Oceania  
+
+```{r, include=FALSE}
+corr <- cor(sum.1$lifeExp, sum.2$gdpPercap)
+corr #output 0.83
+```
+However, there are few data points (5 for each variable), so any conclusion based on the correlation between these two variables might be misleading due to high sampling error.  
+
+In my further analysis I will concentrate only on one continent: *Europe* and explore whether there is a relationship between `Life expectancy` and `GDP per Capita` for this continent.  
+
+## Description of data transformation  
+I am using `dlyr` package to transform the dataset and create a new dataset with the data for only one continent - *Europe*.    
+```{r, echo=FALSE}
+data.europe <- gapminder %>% select(continent, year, lifeExp, gdpPercap) %>% filter(continent == "Europe")
+```
+The new tibble includes 360 observations for 4 variables: `continent` (Europe), `year`, `lifeExp`, `gdpPercap`.  
+By briefly exploring all variables, no abnormalities are detected, so I move to the analysis of correlation. To make analysis easier, I also convert both variables to integers and plot histograms for `Life expectancy` and `GDP per Capita`.   
+
+```{r, echo=FALSE}
+View(data.europe)
+data.europe %>% 
+  mutate(across(lifeExp, as.integer)) %>%
+  mutate(across(gdpPercap, as.integer))
+```
+```{r, echo=FALSE}
+# exploring the variables
+#median(data.europe$lifeExp)
+hist(data.europe$lifeExp, main = "Histogram for Life Expectancy", xlab = "Life Expectancy")
+```
+   
+```{r, echo=FALSE}
+#median(data.europe$gdpPercap)  
+hist(data.europe$gdpPercap, main = "Histogram for GDP per capita", xlab = "GDP per capita")
+```
+   
+It looks like the histogram for `lifeExp` is negatively skewed and the histogram for `gpdPercap` is positively skewed.    
+
+## Pearson correlation analysis    
+
+Correlation test is used to evaluate the association between two or more variables. In my new dataset there are two interval continuous variables: *lifeExp*  and *gdpPercap*, so I am interested in the correlation between these two variables. My *predictor* variable is `gdpPercap` and my dependent variable is `lifeExp`. So I expect that    
+
+## Research Question:  
+
+*Is there a relationship between life expectancy in different countries in Europe and the amount of gross domestic product in international dollars for these countries?*   
+
+First, I visualise the data and run preliminary test to check the test assumptions:  
+
+```{r, echo=FALSE}
+ggplot(data.europe) + 
+  geom_point(mapping = aes(x=gdpPercap, y=lifeExp, color=year)) +
+  labs(title = "Relationship between Life Expectancy and \n GDP per Capita in Europe")
+```
+1. Is the covariation linear? Yes, from the plot above, the relationship is linear, it can be characterised as strong positive relationship.  
+
+2. Are the data from each of the two variables (*lifeExp*  and *gdpPercap*) follow a normal distribution? Since it's a large sample we can assume normality: if data sample is above 30 data points, according to the Central Limit theorem the data can be assumed to be normal.   
+
+
+```{r, echo=FALSE}
+# alternative visualisation using ggscatter
+# plot with statistical results
+# install.packages("ggstatsplot")
+library(ggstatsplot)
+ggscatterstats(data.europe,
+  x = "gdpPercap",
+  y = "lifeExp",
+  conf.int = TRUE,
+  cor.coef = TRUE, cor.method = "pearson",
+  xlab = "GDP per capita", ylab = "Life Expectancy",
+  title = "Relationship between GDP per Capita  and Life Expectancy in Europe",
+  bf.message = FALSE)
+```
+I can conclude that both populations may come from normal distributions even if they are skewed as the sample is large enough. Assuming normality we can run Pearson correlation test.   
+
+*Null hypothesis:* the correlation coefficient is not significantly different from 0. There is no significant linear relationship between `gdpPercap` and `lifeExp` in the population.
+
+*Alternative hypothesis:* the population correlation coefficient is significantly different from 0. There is a significant linear relationship between `gdpPercap` and `lifeExp` in the population.   
+
+```{r, echo=FALSE}
+cor <- cor(data.europe$lifeExp, data.europe$gdpPercap)
+cor
+cor.test(data.europe$lifeExp, data.europe$gdpPercap)
+```
+Correlation test between `lifeExp` and `gdpPercap` for European countries reveals the following:   
+*t* is the t-test statistic value (t = 23.64),  
+*df* is the degrees of freedom (df= 358),   
+*p-value* is the significance level of the t-test (p-value = < 2.2e-16),   
+*conf.int* is the confidence interval of the correlation coefficient at 95% (conf.int = [0.7368907, 0.8181201]),    
+*sample estimates* is the correlation coefficient (cor = 0.78).   
+
+
+## Conclusion:   
+
+### Pearson correlation test revealed that the amount of gross domestic product in international dollars and life expectancy in European countries are significantly positively correlated, *r(358)=.78, p < 0*. This correlation is strong and positive, meaning  that with increased amount of GDP the life expectancy also increases.   
