@@ -1,0 +1,125 @@
+---
+title: "Report using Chi-square as a statistical test"
+author: "Maria Kunevich"
+date: "2022-11-24"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Chi-square test   
+
+The chi-square test of independence is used to analyse the frequency table (i.e. contingency table) formed by two categorical variables. The chi-square test evaluates whether there is a significant association between the categories of the two variables.   
+
+In the dataset *Life in Estonia* I can explore several variables for associations, as there is a number of categorical variables. I want to know if there is a relationship between what people do as their main activity in life  and the level of satisfaction with life (on a 10.point scale, including 0).   
+```{r, include=FALSE}
+library(tidyverse)
+library(knitr)
+library(gplots)
+library(corrplot)
+library(haven) # using the library to download .sav file
+library(readr)
+# downloading the dataset from GitHub
+data <- "https://github.com/Maria-13/DataAnalytics_R/blob/main/Assignments/Life%20in%20estonia%20ENG.sav?raw=true"
+Life_in_estonia_ENG <- read_sav(url(data))
+View(Life_in_estonia_ENG)
+new.df <- Life_in_estonia_ENG %>% select(a19, y4) 
+View(new.df)
+```
+
+There are several categories for the variable *Main Activity*:      
+1. work/have a paid job    
+2. study     
+3. jobless, but looking for a job   
+4. jobless, but not looking for a job   
+5. disabled   
+6. retired   
+7. are in military service
+8. stay at home
+9. other
+
+## Research Question:  
+
+For the analysis, the following research question is formulated:   
+*Is there a statistically significant relationship between what people in Estonia do as their main activity during the day and their level of satisfaction with life?*    
+
+To answer this question we need to create a contingency table for these two variables:   
+```{r, echo=FALSE}
+observed.table <- table(new.df$a19, new.df$y4)
+observed.table <- addmargins(observed.table)
+observed.table
+```
+The contigency table provides us with information that for some categories there are only few answers (in particular, less than 5). This may result in violation of the assumption for chi-square test, so I need to check what are the expected values for each cell.   
+*The Chi square test used for the contingency table requires at least 80% of the cells to have an expected count greater than 5 or else the sum of the cell Chi squares will not have a Chi square distribution and the test p-value will not be valid.*    
+   
+```{r, eval=FALSE}
+chisq <- chisq.test(observed.table)
+chisq
+chisq$expected
+```
+By examining the expected values, I can conclude that for categories 7 and 9 there is not enough data, so I combine the category `military service` with the category `other`. I also combine the first three levels of satisfaction (0 to 2) into one level `2`.   
+
+```{r, include=FALSE}
+new.df$a19[new.df$a19 == 7] <- 9
+new.df$y4[new.df$y4 == 0] <- 2
+new.df$y4[new.df$y4 == 1] <- 2
+observed.table.1 <- table(new.df$a19, new.df$y4)
+observed.table.1
+```
+
+
+The contingency table can be visualised using the function *balloonplot()* in *gplots package*. This function draws a graphical matrix where each cell contains a dot whose size reflects the relative magnitude of the corresponding component.
+
+```{r, echo=FALSE}
+balloonplot(t(observed.table.1), main ="The relationship between Main activity \n in life and Life satisfaction", xlab ="Life satisfaction", ylab="Main activity",
+            label = FALSE, show.margins = FALSE)
+```
+
+From the plot we can see that people who have a paid job and retired people tend to be more satisfied with life.   
+
+However, I'm interested in statistically significant associations between rows and columns of the contingency table. So I need to perform a *Chi-square test* to examine this.   
+
+*Null hypothesis:* the row and the column variables of the contingency table are independent.   
+
+*Alternative hypothesis:* row and column variables are dependent.   
+
+```{r, echo=FALSE}
+chisq.1 <- chisq.test(observed.table.1)
+chisq.1
+chisq.1$expected
+```
+In our dataset, the row and the column variables are statistically significantly associated (p-value = 0). The total `Chi-square statistic` is *457.87*.   
+
+There is still a warning message that Chi-square approximation may be incorrect, so I check the expected values: there are only two cells where expected values are lower than 5, it's less than 20%, so we may disregard the warning.   
+
+I would also like to know the most contributing cells to the total Chi-square score, which is *457.87*, so I calculate the `Chi-square statistic` for each cell with the formula that returns the so-called `Pearson residuals (r)` for each cell (or standardized residuals). Cells with the highest absolute standardized residuals contribute the most to the total Chi-square score.   
+
+```{r, include=FALSE}
+chisq.1$observed
+round(chisq.1$expected,2)
+round(chisq.1$residuals, 2)
+```
+
+```{r, echo=FALSE}
+corrplot(chisq.1$residuals, is.cor = FALSE)
+```
+
+For each cell, the size of the circle is propotional to the amount of the cell contribution. Blue color on the plot indicates that the observed value is higher than the expected value if the data were random, i.e. these are positive residuals. They specify positive association between the corresponding row and column variables.    
+Red color represents negative residuals, which implies negative association between the corresponding row and column variables. For instance, the column `Life satisfaction: 2-3-4-5` are negatively associated (i.e. "not associated") with the row `Main activity: studying`.    
+From the residuals plot we can see the main contributors: students for life satisfaction (scale 8, 9, 10) as well as people who have a paid job (scale 8) and retired people (scale 10). But people who are jobless and are looking for a job together with disable people and people who are jobless and are not looking for a job are main contributors to the scale 2 (very dissatisfied with their life) and to some degree to scales 3-4-5.    
+Visualising the same contribution in percentages, the group people who are jobless and are looking for a job seems to be the most dissatisfied as its contribution to `Chi-square statistic` is the largest.
+
+```{r, echo=FALSE}
+# Contribution in percentage (%)
+contrib <- 100*chisq.1$residuals^2/chisq.1$statistic
+round(contrib, 2)
+# Visualize the contribution
+corrplot(contrib, is.cor = FALSE)
+```
+
+
+The relative contribution of each cell to the total Chi-square score gives some indication of the nature of the dependency between rows and columns of the contingency table. From the image above, it can be seen that the most contributing cells to the Chi-square are *Jobless looking for a job/2* (11.96%),*Jobless but not looking for a job/2* (6.97%), *Disabled/2* (5.02%), *Student/5* (4.37%),*Student/9* (3.75%), *Jobless looking for a job/4* (4.04%), *Jobless looking for a job/8* (4.45%), *Jobless looking for a job/9* (4.03%).  
+These cells contribute about 39% to the total Chi-square score and thus account for most of the difference between expected and observed values.   
+
+## Conclusion:      
+### A chi-square test of independence was performed to examine the relation between `Main activity` and `Satisfaction with life`. The relation between these variables was statistically significant, X^2 (80, N = 5789) = 457.87, p < 0. Students and people with a paid job as well as pensioners were more likely to rate their level of life satisfaction higher. At the same time, jobless people and disabled people were more likely to be dissatisfied with their lives.   
